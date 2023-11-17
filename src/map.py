@@ -1,3 +1,6 @@
+from common import ExecutionUnit
+from functools import partial
+
 class Map:
     def __init__(self, units, function):
         self.call_units = True if type(units) == Map else False
@@ -11,8 +14,7 @@ class Map:
     def __next__(self):
         u = next(self.units_iterator)
 
-        def map_unit():
-            return self.function(u() if self.call_units else u)
+        map_unit = ExecutionUnit(self.function, u)
 
         return map_unit
     
